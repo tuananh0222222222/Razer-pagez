@@ -1,0 +1,45 @@
+﻿@page "/sanpham/{Id?}"
+@model Razer_page.Pages.ProductModel
+@{
+    var product = Model.pr;
+    var products = Model.productService.AllProduct();
+}
+
+
+<h1> @ViewData["Title"]</h1>
+
+@if(product != null)
+{
+   <div class="card" style="width:300px">
+       <div class="card-header">
+           @product.Name
+       </div>
+       <div class="card-body">
+           <p>@product.Description</p>
+           <p>@product.Price</p>
+       </div>
+     
+    </div>
+    <form method="post" asp-page="Product" asp-page-handler="Delete" asp-route-id="@product.Id" >
+        <button type="submit" class="btn btn-danger" >Xoa</button>
+    </form>
+
+    <a asp-page="Product" asp-route-id="">Danh sach sp</a>
+}
+else
+{
+   <ul>
+       @foreach (var item in products)
+       {
+       <li>
+           <a asp-page="Product" asp-route-id="@item.Id">@item.Name</a>
+       </li>
+           
+       }
+   </ul>
+   <div >
+        <a  class="btn btn-info" asp-page="Product" asp-page-handler="LastProduct"> san pham cuoi</a>
+        <a  class="btn btn-danger" asp-page="Product" asp-page-handler="Delete"> xoa san pham</a>
+        <a  class="btn btn-primary" asp-page="Product" asp-page-handler="Load"> load san pham</a>
+   </div>
+}
